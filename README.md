@@ -12,6 +12,10 @@ This guide will help you set up your development environment for building native
   - [Using Docker on macOS to Install Ubuntu and Nix](#using-docker-on-macos-to-install-ubuntu-and-nix)
   - [Building the Apps](#building-the-apps)
   - [sm64](#sm64)
+    - [Preparation](#preparation)
+    - [Building the Project](#building-the-project)
+    - [Customizing Patch Options](#customizing-patch-options)
+      - [Examples](#examples)
 
 ## Installing WSL and Nix on Ubuntu inside WSL
 
@@ -68,5 +72,46 @@ This will produce an output with the `.ipk` file ready for deployment on LG WEBO
 
 ## sm64
 
-You need to copy your own baserom.us.z64 to the root of this project. 
+When building sm64, you have 3 patch options:
 
+- **patch_60fps**: Enables 60 FPS mode (default: true)
+- **patch_betterCamera**: Enables better camera controls (default: true)
+- **patch_noDrawDistance**: Removes draw distance limits (default: false)
+
+### Preparation
+
+Before building the project, ensure you have a copy of your own `baserom.us.z64` placed in the root directory of this project.
+
+### Building the Project
+
+To build the project with the default settings, run:
+
+```sh
+nix-build sm64.nix
+```
+
+This will produce a `result` folder containing the `.ipk` file, which you can install on your TV using the [webOS Dev Manager](https://github.com/webosbrew/dev-manager-desktop).
+
+### Customizing Patch Options
+
+If you want to customize the patch options, you can pass arguments to the `nix-build` command. For example, to enable or disable specific patches, use the following syntax:
+
+```sh
+nix-build sm64.nix --arg [patchname] true/false
+```
+
+#### Examples
+
+To enable the `patch_noDrawDistance`, run:
+
+```sh
+nix-build sm64.nix --arg patch_noDrawDistance true
+```
+
+To disable the `patch_60fps`, run:
+
+```sh
+nix-build sm64.nix --arg patch_60fps false
+```
+
+After building, you can find the `.ipk` file in the `result` folder, ready for installation on your LG WEBOS TV.
