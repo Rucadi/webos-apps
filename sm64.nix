@@ -35,7 +35,7 @@ pkgs.stdenv.mkDerivation {
 
   buildPhase =  common.runChroot ''
     source ${common.toolchain}/environment-setup
-    TARGET_WEBOS=1 make -j$(nproc) ${NO_DRAW_DISTANCE} ${BETTERCAMERA}
+    TARGET_WEBOS=1 make -j$(nproc) ${NO_DRAW_DISTANCE} ${BETTERCAMERA} 
   '';
   dontPatchELF = true;
   dontPatchShebangs = true;

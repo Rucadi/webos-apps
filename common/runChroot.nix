@@ -6,13 +6,45 @@
 }:
 script:
 let 
-    modified_script = ''
-        export out=$out
+    modified_script = let 
+        dollar = "$";
+    in ''
+        envars=()
+        envars+=("SHELL")
+        envars+=("out")
+
+        if [ $# != 1 ]; then
+            for ((i=1; i<=$#; i++)); do
+                envars+=("$1")
+                shift
+            done
+        fi
+
+
+        # Save the current environment variables
+        saved_envars=()
+        for envar in "${dollar}{envars[@]}"; do
+            if [ -z "${dollar}{!envar}" ]; then
+                echo "Error: Environment variable $envar is not set"
+                exit 1
+            fi
+            saved_envars+=("$envar=${dollar}{!envar}")
+        done
+
+        # Unset all environment variables
+        unset $(env | cut -d= -f1)
+
+        # Set the saved environment variables
+        for saved_envar in "${dollar}{saved_envars[@]}"; do
+            export "$saved_envar"
+        done
         export PATH="/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-    ${script}
+        env
+        ${script}
     '';
 in
 ''
+    rm -rf /tmp/rootfs
     mkdir -p /tmp/rootfs
     mkdir $out
     tar xf ${rootfs} -C /tmp/rootfs
@@ -24,6 +56,7 @@ in
      -b "/dev:/dev" \
      -b "/build:/build" \
      -b "$out:$out" \
+     -b "$(pwd):$(pwd)" \
      -w "$(pwd)" \
       ${writeScript "run.sh" modified_script}
 ''

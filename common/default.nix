@@ -5,8 +5,8 @@
 let 
   rootfs_meta = {
     aarch64-linux = {
-      sha256 = "";
-      imageDigest = "sha256:713d14111dd4f8c0d3d7fca20834002061b7146305aad7d079b60be780e47e00";
+      sha256 = "sha256-Pm+cLUDI4401yRFxtfck4+ggrKxBtNUcWVQGrCu6kE4=";
+      imageDigest = "sha256:65b09f9b6a89bffc7dac58ac1445c5492fb6d421e7717896666d531cce405472";
     };
     x86_64-linux = {
       sha256 = "sha256-jwU7BxoFbjYCUoG+qpqV4Nm0ba3Asi4HyRW6Y76KSHU=";
