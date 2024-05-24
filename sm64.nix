@@ -8,6 +8,9 @@
 let 
   ares-cli = pkgs.callPackage ./common/ares-cli.nix {};
   common = pkgs.callPackage ./common/default.nix {};
+
+  BETTERCAMERA = if patch_betterCamera then "BETTERCAMERA=1" else "";
+  NO_DRAW_DISTANCE = if patch_noDrawDistance then "NODRAWINGDISTANCE=1" else "";
 in
 pkgs.stdenv.mkDerivation {
   name = "mario64";
@@ -30,11 +33,7 @@ pkgs.stdenv.mkDerivation {
     popd
   '';
 
-  buildPhase = let 
-    BETTERCAMERA = if patch_betterCamera then "BETTERCAMERA=true" else "";
-    NO_DRAW_DISTANCE = if patch_noDrawDistance then "NODRAWINGDISTANCE=1" else "";
-  in 
-  common.runChroot ''
+  buildPhase =  common.runChroot ''
     source ${common.toolchain}/environment-setup
     TARGET_WEBOS=1 make -j$(nproc) ${NO_DRAW_DISTANCE} ${BETTERCAMERA}
   '';
@@ -46,6 +45,7 @@ pkgs.stdenv.mkDerivation {
     HOME=$(pwd) ares-package .
     mkdir -p $out
     cp -R ./* $out
+    echo   ${if patch_60fps then "60FPS" else ""} ${BETTERCAMERA} ${NO_DRAW_DISTANCE}  >  $out/compile_options
   '';
   fixUpPhase = '''';
 }
