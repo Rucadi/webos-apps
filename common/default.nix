@@ -23,5 +23,6 @@ in
 {
   inherit toolchain;
   runChroot = callPackage ./runChroot.nix {inherit rootfs;};
+  epk2extract = callPackage ./epk2extract.nix {};
   inherit rootfs;
 }
