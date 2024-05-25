@@ -42,13 +42,20 @@ let
         env
         ${script}
     '';
+
 in
 ''
+
     rm -rf /tmp/rootfs
     mkdir -p /tmp/rootfs
     mkdir $out
     tar xf ${rootfs} -C /tmp/rootfs
-    ls -lah /tmp/rootfs
+
+cat <<'EOF' > /tmp/rootfs/____script____.sh
+    ${modified_script}
+EOF
+    chmod a+x /tmp/rootfs/____script____.sh
+
     ${proot}/bin/proot -r /tmp/rootfs \
      -b "${bashInteractiveFHS}/bin/bash:/usr/bin/sh" \
      -b "/proc:/proc" \
@@ -58,5 +65,5 @@ in
      -b "$out:$out" \
      -b "$(pwd):$(pwd)" \
      -w "$(pwd)" \
-      ${writeScript "run.sh" modified_script}
+      /____script____.sh
 ''
