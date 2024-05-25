@@ -47,5 +47,5 @@ pkgs.stdenv.mkDerivation {
     cp -R ./* $out
     echo   ${if patch_60fps then "60FPS" else ""} ${BETTERCAMERA} ${NO_DRAW_DISTANCE}  >  $out/compile_options
   '';
-  fixUpPhase = '''';
+  dontFixup = true;
 }
