@@ -2,7 +2,7 @@
   mario64 ? ./baserom.us.z64, # Mario64 rom
   pkgs ? import <nixpkgs> {},
   patch_60fps ? true,
-  patch_betterCamera ? true,
+  patch_betterCamera ? false,
   patch_noDrawDistance ? false,
 }:
 let 
