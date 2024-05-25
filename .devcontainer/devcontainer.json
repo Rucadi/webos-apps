@@ -1,13 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "Ubuntu",
+	"name": "nix",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:jammy",
-	"features": {
-		"ghcr.io/devcontainers/features/nix:1": {},
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
-	},
-	"containerEnv": { "NIX_CONFIG": "extra-experimental-features = nix-command flakes" }
+	"image": "docker.io/nixpkgs/nix-flakes"
 
 }
