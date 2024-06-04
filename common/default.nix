@@ -18,7 +18,7 @@ let
         imageName = "rucadi/webos-base-image";
     } // rootfs_meta."${system}");
 
-  toolchain = (builtins.getFlake "github:rucadi/native-toolchain/patch-toolchain").defaultPackage."${system}";
+  toolchain = (builtins.getFlake "github:rucadi/native-toolchain/3004032563c1a4e91431f7912123982ee6012bb7").defaultPackage."${system}";
 in 
 {
   inherit toolchain;
