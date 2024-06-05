@@ -18,11 +18,13 @@ let
         imageName = "rucadi/webos-base-image";
     } // rootfs_meta."${system}");
 
+
   toolchain = (builtins.getFlake "github:rucadi/native-toolchain/3004032563c1a4e91431f7912123982ee6012bb7").defaultPackage."${system}";
 in 
 {
   inherit toolchain;
   runChroot = callPackage ./runChroot.nix {inherit rootfs;};
+  runChrootMM = callPackage ./runChroot.nix {rootfs = import ./mm_rootfs.nix;};
   epk2extract = callPackage ./epk2extract.nix {};
   inherit rootfs;
 }
